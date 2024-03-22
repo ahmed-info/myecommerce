@@ -7,7 +7,13 @@
     <title>AdminLTE 3 | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
+    </script>
     <link rel="stylesheet" href="{{ asset('adminasset/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -32,6 +38,7 @@
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
     <!-- Custom style for RTL -->
     <link rel="stylesheet" href="{{ asset('adminasset/dist/css/custom.css') }}">
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -676,7 +683,7 @@
     </div>
     <!-- ./wrapper -->
 
-    <!-- jQuery -->
+    <!-- jQuery --/*! jQuery v3.4.1 >
     <script src="{{ asset('adminasset/plugins/jquery/jquery.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('adminasset/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -713,6 +720,37 @@
     <script src="{{ asset('adminasset/dist/js/pages/dashboard.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('adminasset/dist/js/demo.js') }}"></script>
+    <script src="{{ asset('adminasset/dist/js/myajax.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });  
+        function add(){
+            $('#categoryForm').modal('show');
+        }
+        $('#categoryForm').submit(function(e){
+            e.preventDefault();
+            var formData = new formData(this);
+            $.ajax({
+                type:'POST',
+                url: "{{ url('dashboard/category/insert') }}",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: (data)=>{
+                    console.log(data);
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

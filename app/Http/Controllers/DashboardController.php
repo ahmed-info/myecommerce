@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
+
     public function mydashboard()
     {
         return view('dashboard.layout.dashboard');
@@ -15,7 +21,7 @@ class DashboardController extends Controller
     {
         $categories = Category::all();
 
-        return $categories;
+        //return $categories;
         return view('pages.category.index', compact('categories'));
     }
     public function categrycreate()
@@ -25,14 +31,17 @@ class DashboardController extends Controller
 
     public function categoryinsert(Request $request)
     {
+        $categoryid = $request->id;
         $this->validate(
             $request,
             ['name' => 'required', 'description' => 'required']
         );
+        Category::updateOrCreate([], []);
         $category = new Category;
         $category->name = $request->name;
         $category->description = $request->description;
         $category->save();
+        return response()->json($category);
         return redirect()->route('categry.index');
     }
     public function edit($id)

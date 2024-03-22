@@ -33,8 +33,8 @@
             </div>
             <!-- /.card-body -->
 
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="col-sm-offset-2 col-sm-10"><br />
+                <button type="submit" class="btn btn-primary" id="btn-save">Save changes</button>
             </div>
         </form>
     </div>

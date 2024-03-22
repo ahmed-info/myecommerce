@@ -7,10 +7,18 @@ use App\Models\Category;
 
 class CategoryApiController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
     public function categryindex()
     {
+
         $categories = Category::all();
-        return response()->json(["mesage" => "success", "categories" => $categories]);
+        return response()->json([
+            "mesage" => "success", "categories" => $categories
+        ]);
         //return view('pages.category.index', compact('categories'));
     }
     public function insert(Request $request)

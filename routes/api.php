@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\CategoryApiController;
 use App\Http\Controllers\TestApiController;
 use Illuminate\Http\Request;
@@ -19,7 +20,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/dashboard/category/index', [CategoryApiController::class, 'categryindex']);
-Route::post('/dashboard/category/insert', [CategoryApiController::class, 'insert']);
+
+
+Route::group(["middleware" => "auth:sanctum"], function () {
+    Route::get('/dashboard/category/index', [CategoryApiController::class, 'categryindex']);
+    Route::post('/dashboard/category/insert', [CategoryApiController::class, 'insert']);
+});
+
 Route::put('/dashboard/category/update/{id}', [CategoryApiController::class, 'update']);
 Route::delete('/dashboard/category/delete/{id}', [CategoryApiController::class, 'remove']);
+Route::post('/register', [AuthApiController::class, 'register']);
+Route::post('/login', [AuthApiController::class, 'login']);

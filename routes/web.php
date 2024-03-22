@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExtenalController;
+use App\Http\Controllers\ExternalController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +39,17 @@ Route::post('/dashboard/product/insert', [ProductController::class, 'insert'])->
 Route::get('dashbard/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
 Route::put('dashbard/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
 Route::delete('dashbard/product/delete/{id}', [ProductController::class, 'remove'])->name('product.remove');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/myapi', [ExternalController::class, 'myapi'])->name('myapi');
+
+//// add function in route
+Route::get('/demo', function () {
+    return view('demo');
+});

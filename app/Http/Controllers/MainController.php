@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
+
     public function index()
     {
         //$items = Leader::all();
@@ -16,6 +17,6 @@ class MainController extends Controller
         /// $value = 12000;
         $mycats = Category::where('id', 5)->first();
         //return $category;
-        return view('home', compact('categories', 'mycats'));
+        return view('home2', compact('categories', 'mycats'));
     }
 }
